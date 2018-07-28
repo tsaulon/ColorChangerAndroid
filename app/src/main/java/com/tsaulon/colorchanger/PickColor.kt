@@ -3,11 +3,10 @@ package com.tsaulon.colorchanger
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.annotation.IntegerRes
-import android.view.View
 import kotlinx.android.synthetic.main.activity_pick_color.*
 import android.widget.SeekBar
-import android.widget.TextView
+
+//  TODO: Change seekbar colors on progress changes
 
 class PickColor : AppCompatActivity() {
 
@@ -20,16 +19,17 @@ class PickColor : AppCompatActivity() {
         seekBarB.max = 255
         seekBarA.max = 10
 
-        viewBackground.setBackgroundColor(Color.parseColor(textColor.text.toString()))
-
+        updateText()
+        updateBackground()
+        updateAccents()
 
         seekBarR.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
             override fun onStartTrackingTouch(p0: SeekBar?) {}
             override fun onStopTrackingTouch(p0: SeekBar?) {}
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
-                //textColor.text = "rgba(${seekBarR.progress}, ${seekBarG.progress}, ${seekBarB.progress}, ${seekBarA.progress})"
-                textColor.text = "#${Integer.toHexString(seekBarR.progress)}${Integer.toHexString(seekBarG.progress)}${Integer.toHexString(seekBarB.progress)}".padEnd(7, '0')
-                updateBackground(textColor.text.toString())
+                updateText()
+                updateBackground()
+                updateAccents()
             }
         })
 
@@ -37,9 +37,9 @@ class PickColor : AppCompatActivity() {
             override fun onStartTrackingTouch(p0: SeekBar?) {}
             override fun onStopTrackingTouch(p0: SeekBar?) {}
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
-                //textColor.text = "rgba(${seekBarR.progress}, ${seekBarG.progress}, ${seekBarB.progress}, ${seekBarA.progress})"
-                textColor.text = "#${Integer.toHexString(seekBarR.progress)}${Integer.toHexString(seekBarG.progress)}${Integer.toHexString(seekBarB.progress)}".padEnd(7, '0')
-                updateBackground(textColor.text.toString())
+                updateText()
+                updateBackground()
+                updateAccents()
             }
         })
 
@@ -47,9 +47,9 @@ class PickColor : AppCompatActivity() {
             override fun onStartTrackingTouch(p0: SeekBar?) {}
             override fun onStopTrackingTouch(p0: SeekBar?) {}
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
-                //textColor.text = "rgba(${seekBarR.progress}, ${seekBarG.progress}, ${seekBarB.progress}, ${seekBarA.progress})"
-                textColor.text = "#${Integer.toHexString(seekBarR.progress)}${Integer.toHexString(seekBarG.progress)}${Integer.toHexString(seekBarB.progress)}".padEnd(7, '0')
-                updateBackground(textColor.text.toString())
+                updateText()
+                updateBackground()
+                updateAccents()
             }
         })
 
@@ -57,15 +57,21 @@ class PickColor : AppCompatActivity() {
             override fun onStartTrackingTouch(p0: SeekBar?) {}
             override fun onStopTrackingTouch(p0: SeekBar?) {}
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
-                //textColor.text = "rgba(${seekBarR.progress}, ${seekBarG.progress}, ${seekBarB.progress}, ${seekBarA.progress})"
-                textColor.text = "#${Integer.toHexString(seekBarR.progress)}${Integer.toHexString(seekBarG.progress)}${Integer.toHexString(seekBarB.progress)}".padEnd(7, '0')
-                updateBackground(textColor.text.toString())
+                updateText()
+                updateBackground()
+                updateAccents()
             }
         })
     }
 
-    fun updateBackground(hex: String) = viewBackground.setBackgroundColor(Color.parseColor(hex))
-}
+    fun updateBackground() = viewBackground.setBackgroundColor(Color.rgb(seekBarR.progress, seekBarG.progress, seekBarB.progress))
+    fun updateAccents(){
+        textRGB.setTextColor(Color.rgb(255 - seekBarR.progress, 255 - seekBarG.progress, 255 - seekBarA.progress))
+        textHex.setTextColor(Color.rgb(255 - seekBarR.progress, 255 - seekBarG.progress, 255 - seekBarA.progress))
+    }
+    fun updateText(){
+        textRGB.text = "rgba(${seekBarR.progress}, ${seekBarG.progress}, ${seekBarB.progress}, ${seekBarA.progress})"
+        textHex.text = "#${Integer.toHexString(seekBarR.progress)}${Integer.toHexString(seekBarG.progress)}${Integer.toHexString(seekBarB.progress)}".padEnd(7, '0').toUpperCase()
+    }
 
-//  TODO: Fix color transitions for more readability.
-//  TODO: Polish and remove redundant code
+}
