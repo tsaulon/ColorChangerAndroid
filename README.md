@@ -6,7 +6,7 @@ This is a small-scale android application that uses seekbar progression values t
 Demo
 ====
 
-![Color Changer Demo](github/colorchanger.gif)
+<img src="github/colorchanger.gif" width="200" height="400">
 
 Technology & Frameworks
 =======================
